@@ -1,3 +1,4 @@
+import ipaddress
 import csv
 import io
 import sqlite3
@@ -66,12 +67,23 @@ def upload():
             raise ValueError("CSV requires timestamp, ip, username, result columns")
         records = []
         for row in reader:
-            timestamp = datetime.fromisoformat(row["timestamp"].strip()).isoformat(timespec="seconds")
+            timestamp = datetime.fromisoformat(
+                row["timestamp"].strip()
+            ).isoformat(timespec="seconds")
+
             ip = row["ip"].strip()
+
+            try:
+                ipaddress.ip_address(ip)
+            except ValueError as exc:
+                raise ValueError(f"Invalid IP address: {ip}") from exc
+
             username = row["username"].strip()
             result = row["result"].strip().lower()
+
             if not ip or not username or result not in ("success", "failure"):
                 raise ValueError("Invalid IP, username, or result")
+
             records.append((timestamp, ip, username, result))
         if not records:
             raise ValueError("CSV is empty")
