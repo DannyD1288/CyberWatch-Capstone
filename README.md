@@ -88,3 +88,9 @@ https://github.com/DannyD1288/CyberWatch-Capstone
 
 ## Academic Purpose
 Developed as an individual Computer Information Technology Capstone project at William Paterson University.
+## Dashboard Screenshot
+
+The CyberWatch dashboard displays authentication statistics,
+security alerts, and recent login activity.
+
+![CyberWatch Dashboard](screenshots/dashboard.png)
