@@ -1,20 +1,90 @@
-# CyberWatch — CIT Capstone Starter MVP
+# CyberWatch — Security Log Monitoring System
 
-## Run on Windows
-1. Install Python 3.11+ from python.org (check **Add Python to PATH**).
-2. Open this folder in VS Code, then open **Terminal > New Terminal**.
-3. Run `py -m venv .venv`.
-4. Run `.venv\Scripts\activate` (PowerShell may require `Set-ExecutionPolicy -Scope Process Bypass`).
-5. Run `pip install -r requirements.txt`.
-6. Run `python app.py`.
-7. Open http://127.0.0.1:5000 in your browser.
-8. Upload `sample_data/sample_log.csv`; check that an alert appears.
+## Project Overview
+CyberWatch is an individual CIT Capstone project that demonstrates how security event logs can be analyzed to identify potentially suspicious authentication activity. It is a local, educational security monitoring application, not a production SIEM.
 
-## Tests
-Run `python -m pytest -q`.
+## Project Objectives
+- Import and analyze authentication log records from CSV files.
+- Detect repeated failed login attempts from the same IP address.
+- Display authentication statistics and security alerts.
+- Allow users to search and filter log events and alerts.
+- Track alert resolution status.
+- Validate detection logic using automated tests.
 
-## What this starter does
-CSV upload, validation, simple 5-failures-in-5-minutes detection, SQLite event/alert storage, dashboard counters, alert resolution, and basic browser filtering.
+## Technologies Used
+- Python and Flask
+- SQLite
+- HTML, CSS, JavaScript
+- Bootstrap and Chart.js
+- Pytest
+- Git and GitHub
+- Visual Studio Code
 
-## Known limitations / next steps
-This is a learning prototype, not production security software. No authentication, CSRF protection, real-time monitoring, robust duplicate suppression across uploads, or full date filtering. Detection operates within each uploaded file, and reuploading duplicates records. Dashboard shows the most recent 200 events and 100 alerts. The alert counter represents the displayed alerts, not necessarily all historical alerts. Do not expose the Flask development server publicly or use real personal/security data. Add date filters, charts, secure configuration, stronger tests, diagrams, and documentation during the semester.
+## Features
+
+### Security Dashboard
+Displays total events, successful logins, failed logins, and open alerts, along with an authentication outcomes chart.
+
+### CSV Log Analysis
+Imports synthetic authentication logs with the required columns: `timestamp`, `ip`, `username`, and `result` (`success` or `failure`). The upload limit is 2 MB.
+
+### Detection Rule
+Flags five failed authentication attempts from the same IP address within five minutes. Alerts indicate activity requiring review; they do not prove an attack occurred.
+
+### Alert Management
+Displays source IP, detection time, failed attempt count, severity, and status. Alerts can be marked resolved and filtered by status.
+
+### Event Search
+Supports searching authentication events and filtering by authentication result.
+
+## How to Run Locally
+1. Install Python 3.11 or later.
+2. Open the `cyberwatch` project folder in Visual Studio Code.
+3. Open the VS Code terminal.
+4. Install dependencies: `python -m pip install -r requirements.txt`
+5. Start the application: `python app.py`
+6. Open `http://127.0.0.1:5000` in your browser.
+7. Upload `sample_data/sample_log.csv` to demonstrate the detection rule.
+
+## Automated Testing
+Run `python -m pytest tests/test_detection.py -v` from the project folder.
+
+Five automated detection tests passed on October 10, 2026:
+1. Five failed logins trigger an alert.
+2. Four failed logins do not trigger an alert.
+3. Successful logins do not trigger an alert.
+4. Failed logins from different IP addresses do not trigger an alert.
+5. Five failed logins outside a five-minute window do not trigger an alert.
+
+See `test_results.txt` for the recorded test output.
+
+## Project Structure
+```text
+cyberwatch/
+├── app.py
+├── templates/
+│   └── index.html
+├── sample_data/
+│   └── sample_log.csv
+├── tests/
+│   └── test_detection.py
+├── requirements.txt
+├── test_results.txt
+├── .gitignore
+└── README.md
+```
+
+## Current Scope and Limitations
+CyberWatch processes uploaded synthetic CSV files. It does not provide continuous real-time monitoring, production authentication, or automated incident response. The application is intended for local demonstration and educational testing.
+
+## Future Enhancements
+- Additional detection rules and configurable thresholds.
+- Exportable security alert reports.
+- Improved error handling and additional automated tests.
+- Dashboard screenshots and final capstone demonstration documentation.
+
+## Repository
+https://github.com/DannyD1288/CyberWatch-Capstone
+
+## Academic Purpose
+Developed as an individual Computer Information Technology Capstone project at William Paterson University.
