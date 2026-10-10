@@ -1,0 +1,8 @@
+timestamp,ip,username,result
+2026-10-10T12:00:00,192.0.2.10,testuser,failure
+2026-10-10T12:00:10,192.0.2.10,testuser,failure
+2026-10-10T12:00:20,192.0.2.10,testuser,failure
+2026-10-10T12:00:30,192.0.2.10,testuser,failure
+2026-10-10T12:00:40,192.0.2.10,testuser,failure
+2026-10-10T12:00:50,192.0.2.10,testuser,failure
+2026-10-10T12:02:00,198.51.100.20,alice,success
